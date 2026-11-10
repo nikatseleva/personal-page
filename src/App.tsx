@@ -1,35 +1,26 @@
-import {useEffect, useState} from "react";
+import Background from "./components/Background";
 import Header from "./components/Header";
-import AboutMe from "./blocks/AboutMe";
-import Skills from "./blocks/Skills";
-import Portfolio from "./blocks/Portfolio";
 import Footer from "./components/Footer";
-import {useSelector} from "react-redux";
-import {RootState} from "./store";
-import MoreAboutMe from "./blocks/MoreAboutMe";
+import Hero from "./blocks/Hero";
+import Skills from "./blocks/Skills";
+import Experience from "./blocks/Experience";
+import Projects from "./blocks/Projects";
+import Contact from "./blocks/Contact";
 
 function App() {
-    const {theme} = useSelector((state: RootState) => state.PortfolioLandingPageStore);
-    const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-
-    useEffect(() => {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        localStorage.setItem('theme', theme);
-    }, [theme]);
-
     return (
-        <div className={'styled_scrollbar overflow-y-auto duration-500 relative w-full h-full bg-neutral-100 dark:bg-neutral-900'}>
-            { openMoreInfo
-                ? <MoreAboutMe openMoreInfo={setOpenMoreInfo} />
-                : null
-            }
+        <>
+            <Background/>
             <Header/>
-            <AboutMe openMoreInfo={setOpenMoreInfo} />
-            <Skills/>
-            <Portfolio/>
+            <main>
+                <Hero/>
+                <Skills/>
+                <Experience/>
+                <Projects/>
+                <Contact/>
+            </main>
             <Footer/>
-        </div>
-
+        </>
     );
 }
 

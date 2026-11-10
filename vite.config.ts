@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
@@ -13,18 +13,5 @@ export default defineConfig({
   },
   build: {
     outDir: 'build',
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-    css: false,
-    clearMocks: true,
-    coverage: {
-      provider: 'v8',
-      reportsDirectory: 'coverage',
-      include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/**/*.test.{ts,tsx}', 'src/setupTests.ts', 'src/index.tsx'],
-    },
   },
 });

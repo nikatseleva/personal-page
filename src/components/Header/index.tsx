@@ -1,150 +1,127 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
-import {Switch} from "@mui/material";
-import DehazeIcon from '@mui/icons-material/Dehaze';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import {SectionId} from '../../types';
+import ThemeToggle from '../ThemeToggle';
 
-import {RootState} from "../../store";
-import {setCurrentBlock, setTheme} from "../../store/slice";
+const navItems: { id: SectionId; label: string }[] = [
+    {id: 'skills', label: 'skills'},
+    {id: 'experience', label: 'experience'},
+    {id: 'projects', label: 'projects'},
+    {id: 'contact', label: 'contact'},
+];
 
 const Header = () => {
-
-    const dispatch = useDispatch();
-    const {theme, currentBlock} = useSelector((state: RootState) => state.PortfolioLandingPageStore)
-    const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
-
-    const handleResize = () => {
-        if (window.screen.width > 1024) {
-            setIsOpenMenu(false);
-        }
-    };
+    const [currentBlock, setCurrentBlock] = useState<SectionId>('home');
+    const [isOpenMenu, setIsOpenMenu] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 16);
 
     useEffect(() => {
-        if (isOpenMenu) {
-            window.addEventListener('resize', handleResize);
-        }
+        const handleScroll = () => setIsScrolled(window.scrollY > 16);
+        window.addEventListener('scroll', handleScroll, {passive: true});
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
+    useEffect(() => {
+        const media = window.matchMedia('(min-width: 768px)');
+        const handleChange = (e: MediaQueryListEvent) => {
+            if (e.matches) {
+                setIsOpenMenu(false);
+            }
         };
+        media.addEventListener('change', handleChange);
+        return () => media.removeEventListener('change', handleChange);
+    }, []);
 
-    }, [isOpenMenu]);
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setCurrentBlock(entry.target.id as SectionId);
+                }
+            });
+        }, {rootMargin: '-45% 0px -50% 0px'});
+
+        document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
+        return () => observer.disconnect();
+    }, []);
+
+    const handleNavigate = (id: SectionId) => {
+        setCurrentBlock(id);
+        setIsOpenMenu(false);
+    };
+
+    const isSolid = isScrolled || isOpenMenu;
 
     return (
-        <header className={`text-neutral-900 dark:text-neutral-300
-         lg:h-[10vh] h-[10%] min-h-[64px] w-full bg-inherit z-30 sticky top-0 font-mono`}>
-            {
-                isOpenMenu
-                    ? <div className={'lg:hidden bg-inherit w-full h-full relative flex flex-row justify-between'}>
-                        <div className={'w-[20%] flex h-full justify-evenly items-center'}>
-                            <button onClick={() => setIsOpenMenu(false)}>
-                                <ArrowBackIosIcon sx={{fontSize: '4rem'}}/>
-                            </button>
-                        </div>
-                        <div className={'flex justify-evenly items-center mobile:text-5xl text-3xl grow'}>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'about' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#about-anchor'} className={'hover:scale-110'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('about'))
-                                   }
-                                   }>about</a>
-                            </div>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'skills' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#skills-anchor'} className={'hover:scale-110'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('skills'))
-                                   }
-                                   }>skills</a>
-                            </div>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'portfolio' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#portfolio-anchor'} className={'hover:scale-110'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('portfolio'))
-                                   }
-                                   }>pet-projects</a>
-                            </div>
-                        </div>
-                    </div>
-                    : (<div className={'relative w-full h-full flex flex-row justify-between'}>
-                        <div className={'lg:hidden w-[20%] flex h-full justify-evenly items-center'}>
-                            <button onClick={() => setIsOpenMenu(true)}>
-                                <DehazeIcon sx={{fontSize: '4rem'}}/>
-                            </button>
-                        </div>
-                        <div className={'lg:flex w-[35%] hidden gap-2 h-full justify-evenly items-center text-2xl'}>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'about' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#about-anchor'} className={'opacity-70 active:opacity-100 hover:opacity-100'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('about'))
-                                   }
-                                   }>about</a>
-                            </div>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'skills' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#skills-anchor'} className={'opacity-70 active:opacity-100 hover:opacity-100'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('skills'))
-                                   }
-                                   }>skills</a>
-                            </div>
-                            <div
-                                className={`border-b-4 ${currentBlock === 'portfolio' ? 'animated-border' : 'border-transparent'}`}>
-                                <a href={'#portfolio-anchor'} className={'opacity-70 active:opacity-100 hover:opacity-100'}
-                                   onClick={() => {
-                                       dispatch(setCurrentBlock('portfolio'))
-                                   }
-                                   }>pet-projects</a>
-                            </div>
-                        </div>
-                        <div className={'flex grow h-full justify-center gap-8 items-center'}>
-                            <a href={'https://t.me/nikatseleva'} target="_blank">
-                                <TelegramIcon className={'opacity-50 hover:opacity-100 active:opacity-100'}/>
+        <header
+            className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${isSolid
+                ? 'border-neutral-200/70 bg-neutral-50/75 backdrop-blur-xl dark:border-white/10 dark:bg-ink/70'
+                : 'border-transparent'}`}
+        >
+            <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8 md:h-20">
+                <a
+                    href="#home"
+                    onClick={() => handleNavigate('home')}
+                    className="font-mono text-lg font-semibold text-neutral-900 dark:text-white"
+                >
+                    <span className="text-brand-violet dark:text-brand-cyan">&lt;</span>
+                    veronika
+                    <span className="text-brand-pink"> /&gt;</span>
+                </a>
+
+                <ul className="hidden items-center gap-1 md:flex">
+                    {navItems.map(({id, label}) => (
+                        <li key={id}>
+                            <a
+                                href={`#${id}`}
+                                onClick={() => handleNavigate(id)}
+                                aria-current={currentBlock === id ? 'location' : undefined}
+                                className={`relative px-3 py-2 font-mono text-sm transition-colors hover:text-neutral-900 dark:hover:text-white ${currentBlock === id
+                                    ? 'text-neutral-900 dark:text-white'
+                                    : 'text-neutral-500 dark:text-neutral-400'}`}
+                            >
+                                {label}
+                                <span
+                                    className={`absolute inset-x-3 -bottom-0.5 border-b-2 ${currentBlock === id ? 'animated-border' : 'border-transparent'}`}/>
                             </a>
-                            <a href={'https://github.com/oOFaYOo'} target="_blank">
-                                <GitHubIcon className={'opacity-50 hover:opacity-100 active:opacity-100'}/>
+                        </li>
+                    ))}
+                </ul>
+
+                <div className="flex items-center gap-2">
+                    <ThemeToggle/>
+                    <button
+                        type="button"
+                        aria-label={isOpenMenu ? 'Close menu' : 'Open menu'}
+                        aria-expanded={isOpenMenu}
+                        onClick={() => setIsOpenMenu((open) => !open)}
+                        className="grid size-10 place-items-center rounded-full border border-neutral-300 text-xl text-neutral-700 md:hidden dark:border-white/10 dark:text-neutral-300"
+                    >
+                        {isOpenMenu ? <CloseIcon fontSize="inherit"/> : <MenuIcon fontSize="inherit"/>}
+                    </button>
+                </div>
+            </nav>
+
+            {isOpenMenu && (
+                <ul className="flex flex-col gap-1 border-t border-neutral-200/70 px-5 pt-4 pb-8 md:hidden dark:border-white/10">
+                    {navItems.map(({id, label}, i) => (
+                        <li key={id}>
+                            <a
+                                href={`#${id}`}
+                                onClick={() => handleNavigate(id)}
+                                className="flex items-baseline gap-4 py-3 font-display text-3xl font-semibold text-neutral-900 dark:text-white"
+                            >
+                                <span className="font-mono text-sm text-brand-violet dark:text-brand-cyan">0{i + 1}</span>
+                                {label}
                             </a>
-                            <a href={"mailto:nikatseleva@gmail.com"} target="_blank">
-                                <AlternateEmailIcon className={'opacity-50 hover:opacity-100 active:opacity-100'}/>
-                            </a>
-                            <a href={'https://www.linkedin.com/in/veronika-tseleva-frontend-web-developer/'}
-                               target="_blank">
-                                <LinkedInIcon className={'opacity-50 hover:opacity-100 active:opacity-100'}/>
-                            </a>
-                        </div>
-                        <div className={'mobile:hidden flex w-[20%] h-full justify-center items-center'}>
-                            <LightModeIcon
-                                className={'text-amber-500/50 dark:text-inherit dark:opacity-50'}/>
-                            <Switch data-testid={'switch'} id={'theme-switcher'} color={'default'}
-                                    checked={theme === 'dark'}
-                                    onChange={(e) => {
-                                        dispatch(setTheme(e.currentTarget.checked ? 'dark' : 'light'));
-                                    }}/>
-                            <DarkModeIcon
-                                className={'opacity-50 dark:opacity-100 dark:text-sky-600/50'}/>
-                        </div>
-                        <div className={'hidden mobile:flex w-[20%] h-full justify-center items-center opacity-50'}>
-                            <span className={'hidden dark:inline'}>
-                                <LightModeIcon onClick={() => dispatch(setTheme('light'))}/>
-                            </span>
-                            <span className={'dark:hidden'}>
-                                <DarkModeIcon onClick={() => dispatch(setTheme('dark'))}/>
-                            </span>
-                        </div>
-                    </div>)
-            }
+                        </li>
+                    ))}
+                </ul>
+            )}
         </header>
-    )
+    );
 };
 
-export default React.memo(Header);
+export default Header;

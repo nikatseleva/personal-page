@@ -1,13 +1,3 @@
-import {ReactElement} from "react";
+export type Theme = 'light' | 'dark';
 
-export interface IPortfolioLandingPageState {
-    theme: 'light' | 'dark';
-    currentBlock: 'about' | 'skills' | 'portfolio'
-}
-
-export interface IButtonLink {
-    buttonText: string,
-    link: string,
-    className?: string,
-    ico?: ReactElement
-}
+export type SectionId = 'home' | 'skills' | 'experience' | 'projects' | 'contact';

@@ -1,28 +1,23 @@
-# Personal web (landing) page
+# Veronika Tseleva — portfolio
 
-A simple portfolio page for practicing responsive layout.
-Using: React, TypeScript, Vite, Tailwind, React Testing Library, Vitest, Material UI, Redux Toolkit.  
-Tested only on Google Chrome.
+Personal landing page of a frontend developer: skills, work experience and commercial projects.
+Dark theme by default with a light theme toggle, responsive layout for desktop and mobile.
 
-First time I tried to adapt to a mobile screen
+## Hosted instance
+https://veronika-tseleva-frontend-web-developer.vercel.app/
 
-## Scripts:
+## Stack
+React, TypeScript, Vite, Tailwind CSS, Material UI Icons, Jest, React Testing Library.
+
+## Scripts
 - `npm run dev` — dev server on http://localhost:3000
 - `npm run build` — type check and production build into `build/`
 - `npm run preview` — preview the production build
-- `npm test` — run tests in watch mode
-- `npm run test:coverage` — run tests with coverage
 - `npm run lint` — ESLint
+- `npm test` — run tests
+- `npm run test:watch` — run tests in watch mode
+- `npm run test:coverage` — run tests with coverage
 
-## Hosted instance:
-https://veronika-tseleva-frontend-web-developer.vercel.app/
-
-## Demonstration:
-### Laptop
-![demo](https://github.com/oOFaYOo/portfolio-landing-page/blob/main/public/demo.gif)
-
-### Mobile
-![demo](https://github.com/oOFaYOo/portfolio-landing-page/blob/main/public/demo-mobile.gif)
-
-## Test coverage:
-![coverage](https://github.com/oOFaYOo/portfolio-landing-page/blob/main/public/coverage.jpg)
+## Content
+All texts, links, skills, experience and projects live in `src/data/profile.ts`.
+Images are in `src/assets`.

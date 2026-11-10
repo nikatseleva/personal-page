@@ -44,6 +44,11 @@ export const skillGroups: SkillGroup[] = [
     {title: 'Testing & Data', items: ['Jest', 'React Testing Library', 'IndexedDB', 'Node.js']},
 ];
 
+export const aiTools: SkillGroup = {
+    title: 'AI tools',
+    items: ['Claude Code', 'AI-assisted coding'],
+};
+
 export interface Job {
     company: string;
     role: string;

@@ -1,10 +1,18 @@
 # Personal web (landing) page
 
 A simple portfolio page for practicing responsive layout.
-Using: React, TypeScript, Tailwind, React Testing Library, Jest, Material UI, Redux Toolkit.  
+Using: React, TypeScript, Vite, Tailwind, React Testing Library, Vitest, Material UI, Redux Toolkit.  
 Tested only on Google Chrome.
 
 First time I tried to adapt to a mobile screen
+
+## Scripts:
+- `npm run dev` — dev server on http://localhost:3000
+- `npm run build` — type check and production build into `build/`
+- `npm run preview` — preview the production build
+- `npm test` — run tests in watch mode
+- `npm run test:coverage` — run tests with coverage
+- `npm run lint` — ESLint
 
 ## Hosted instance:
 https://veronika-tseleva-frontend-web-developer.vercel.app/

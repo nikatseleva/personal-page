@@ -1,9 +1,8 @@
 import React, {useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 
-import {RootState} from "../../store";
 import {setCurrentBlock} from "../../store/slice";
-import {useOnScreen} from "../../App";
+import {useOnScreen} from "../../hooks/useOnScreen";
 
 import ygt_light from '../../images/ygt_light.jpg';
 import ygt_dark from '../../images/ygt_dark.jpg';
@@ -21,7 +20,6 @@ import ButtonLink from "../../components/ButtonLink";
 
 const Portfolio = () => {
     const dispatch = useDispatch();
-    const {theme} = useSelector((state: RootState) => state.PortfolioLandingPageStore);
 
     const ref = useRef<HTMLDivElement>(null);
     const isVisible = useOnScreen(ref);
@@ -88,7 +86,7 @@ const Portfolio = () => {
 
     return (
         <div ref={ref}
-             className={`${theme === 'light' ? 'text-neutral-900' : 'text-neutral-300'} px-12 overflow-hidden relative w-full pt-36 mt-44 mb-12`}>
+             className={`text-neutral-900 dark:text-neutral-300 px-12 overflow-hidden relative w-full pt-36 mt-44 mb-12`}>
             <div
                 className={'absolute left-0 top-0 mobile:hidden border-t-4 border-l-4 translate-y-4 translate-x-8 animated-border w-[60%] h-[50%]'}>
             </div>
@@ -105,10 +103,12 @@ const Portfolio = () => {
                         <div ref={i === 1 ? refBlock : null} key={i}
                              className={'mobile:w-full w-[400px] h-[530px] lg:h-[500px] shadow-md my-4 mobile:h-[350px] relative p-4 ' +
                                  `flex mobile:flex-row flex-col justify-between items-center
-                                      ${isVisible ? 'anim-active' : `${i % 2 === 0 ? 'anim -translate-x-[100%]' : 'anim translate-x-[100%]'}`}
-                                      ${theme === 'light' ? 'shadow-black/10' : 'shadow-black'}`}>
-                            <img src={theme === 'light' ? item.demoLight : item.demoDark}
-                                 className={'border-transparent mb-2 mobile:mr-4 max-h-[250px] grayscale hover:grayscale-0'}/>
+                                      ${isVisible ? 'anim-active' : `${i % 2 === 0 ? 'anim -translate-x-full' : 'anim translate-x-full'}`}
+                                      shadow-black/10 dark:shadow-black`}>
+                            <img src={item.demoLight}
+                                 className={'dark:hidden border-transparent mb-2 mobile:mr-4 max-h-[250px] grayscale hover:grayscale-0'}/>
+                            <img src={item.demoDark}
+                                 className={'hidden dark:block border-transparent mb-2 mobile:mr-4 max-h-[250px] grayscale hover:grayscale-0'}/>
                             <div className={'flex flex-col w-full justify-between mobile:justify-end mobile:items-center'}>
                                     <span
                                         className={'font-bold mobile:font-semibold mobile:mb-2 text-3xl lg:text-xl mobile:text-5xl mobile:text-center'}>

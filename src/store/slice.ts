@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import {IPortfolioLandingPageState} from "../types";
 
 export const initialState: IPortfolioLandingPageState = {
-    theme: localStorage.theme ? localStorage.theme : 'light',
+    theme: localStorage.getItem('theme') === 'light' ? 'light' : 'dark',
     currentBlock: 'about',
 };
 

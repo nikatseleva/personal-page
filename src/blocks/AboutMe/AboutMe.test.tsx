@@ -4,13 +4,6 @@ import {Provider} from "react-redux";
 import {store} from "../../store";
 import AboutMe from "./index";
 
-jest.mock('../../images/photo.jpg', ()=>'');
-
-const intersectionObserverMock = () => ({
-    observe: () => null,
-    disconnect: () => null
-})
-window.IntersectionObserver = jest.fn().mockImplementation(intersectionObserverMock);
 
 it('AboutMe test', ()=>{
 

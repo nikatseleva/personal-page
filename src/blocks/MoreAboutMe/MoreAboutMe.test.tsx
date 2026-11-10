@@ -4,7 +4,6 @@ import {Provider} from "react-redux";
 import {store} from "../../store";
 import MoreAboutMe from "./index";
 
-jest.mock('./cv_veronika_tseleva.pdf', ()=>'');
 
 it('MoreAboutMe test', ()=>{
 

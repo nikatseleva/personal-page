@@ -1,18 +1,16 @@
 import React, {Dispatch, SetStateAction, useEffect, useRef} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import TelegramIcon from '@mui/icons-material/Telegram';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import {RootState} from "../../store";
 
 import photo from '../../images/photo.jpg';
 import ButtonLink from "../../components/ButtonLink";
-import {useOnScreen} from "../../App";
+import {useOnScreen} from "../../hooks/useOnScreen";
 import {setCurrentBlock} from "../../store/slice";
 
 const AboutMe = ({openMoreInfo} : {openMoreInfo:Dispatch<SetStateAction<boolean>>}) => {
     const dispatch = useDispatch();
-    const {theme} = useSelector((state: RootState) => state.PortfolioLandingPageStore);
 
     const refBlock = useRef<HTMLDivElement>(null);
     const isBlockVisible = useOnScreen(refBlock);
@@ -26,7 +24,7 @@ const AboutMe = ({openMoreInfo} : {openMoreInfo:Dispatch<SetStateAction<boolean>
     return (
         <>
             <div
-                 className={`${theme === 'light' ? 'text-neutral-900' : 'text-neutral-300'} 
+                 className={`text-neutral-900 dark:text-neutral-300
             w-full relative lg:flex-row flex-col flex px-24 lg:min-h-[515px] lg:h-[90vh] my-16 lg:my-0 justify-between`}>
                 <a id={'about-anchor'}/>
                 <div

@@ -38,7 +38,7 @@ const Header = () => {
     }, [isOpenMenu]);
 
     return (
-        <header className={`${theme === 'light' ? 'text-neutral-900' : 'text-neutral-300'} 
+        <header className={`text-neutral-900 dark:text-neutral-300
          lg:h-[10vh] h-[10%] min-h-[64px] w-full bg-inherit z-30 sticky top-0 font-mono`}>
             {
                 isOpenMenu
@@ -124,33 +124,22 @@ const Header = () => {
                         </div>
                         <div className={'mobile:hidden flex w-[20%] h-full justify-center items-center'}>
                             <LightModeIcon
-                                className={`${theme === 'light' ? 'text-amber-500/50' : 'text-inherit opacity-50'}`}/>
+                                className={'text-amber-500/50 dark:text-inherit dark:opacity-50'}/>
                             <Switch data-testid={'switch'} id={'theme-switcher'} color={'default'}
-                                    checked={theme !== 'light'}
+                                    checked={theme === 'dark'}
                                     onChange={(e) => {
-                                        const theme = e.currentTarget.checked ? 'dark' : 'light';
-                                        localStorage.setItem('theme', theme)
-                                        dispatch(setTheme(theme));
+                                        dispatch(setTheme(e.currentTarget.checked ? 'dark' : 'light'));
                                     }}/>
                             <DarkModeIcon
-                                className={`${theme === 'light' ? 'text-inherit opacity-50' : 'text-sky-600/50'}`}/>
+                                className={'opacity-50 dark:opacity-100 dark:text-sky-600/50'}/>
                         </div>
                         <div className={'hidden mobile:flex w-[20%] h-full justify-center items-center opacity-50'}>
-                            {
-                                theme === 'dark'
-                                    ? <LightModeIcon data-testid={'LightModeIcon'} onClick={
-                                        () => {
-                                            localStorage.setItem('theme', 'light')
-                                            dispatch(setTheme('light'));
-                                        }
-                                    }/>
-                                    : <DarkModeIcon data-testid={'DarkModeIcon'} onClick={
-                                        () => {
-                                            localStorage.setItem('theme', 'dark')
-                                            dispatch(setTheme('dark'));
-                                        }
-                                    }/>
-                            }
+                            <span className={'hidden dark:inline'}>
+                                <LightModeIcon onClick={() => dispatch(setTheme('light'))}/>
+                            </span>
+                            <span className={'dark:hidden'}>
+                                <DarkModeIcon onClick={() => dispatch(setTheme('dark'))}/>
+                            </span>
                         </div>
                     </div>)
             }

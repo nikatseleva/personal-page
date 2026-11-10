@@ -1,11 +1,8 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {useSelector} from "react-redux";
-import {RootState} from "../../store";
 import cv from "./cv_veronika_tseleva.pdf";
 
 const MoreAboutMe = ({openMoreInfo}: { openMoreInfo: Dispatch<SetStateAction<boolean>> }) => {
-    const {theme} = useSelector((state: RootState) => state.PortfolioLandingPageStore);
 
     const skills = [
         'React',
@@ -16,7 +13,7 @@ const MoreAboutMe = ({openMoreInfo}: { openMoreInfo: Dispatch<SetStateAction<boo
     ];
 
     return (
-        <div className={`${theme === 'light' ? 'text-neutral-900' : 'text-neutral-300'} 
+        <div className={`text-neutral-900 dark:text-neutral-300
         fixed z-40 bg-inherit w-full h-full flex justify-center items-center`}>
             <div className={'flex flex-col justify-center items-center mobile:w-[80%] w-[50%] lg:max-w-[500px]'}>
                 <div className={'w-full mb-8 mobile:mb-32'}>
@@ -54,10 +51,8 @@ const MoreAboutMe = ({openMoreInfo}: { openMoreInfo: Dispatch<SetStateAction<boo
                             href={cv}
                             target="_blank"
                         >
-                        <button className={`mobile:border-[6px] border-4 tracking-tight animated-border p-2 shadow-md 
-                        ${theme === 'light' 
-                            ? 'hover:shadow-black/30 hover:bg-white' 
-                            : 'hover:shadow-white/10 hover:bg-black'}`}>
+                        <button className={`mobile:border-[6px] border-4 tracking-tight animated-border p-2 shadow-md
+                        hover:shadow-black/30 hover:bg-white dark:hover:shadow-white/10 dark:hover:bg-black`}>
                             Download Resume
                         </button>
                         </a>
